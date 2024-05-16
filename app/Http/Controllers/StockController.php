@@ -85,12 +85,12 @@ class StockController extends Controller
 
    $chalan = Stock::where('product_id','=',$id)
              ->where('current_quantity','>',0)
-   // ->withCount([
-   //  'sell_details AS sold_qty' => function ($query) use ($id){
+    ->withCount([
+     'sell_details AS sold_qty' => function ($query) use ($id){
 
-   //    $query->select(DB::raw("COALESCE(SUM(sold_quantity),0)"));
+       $query->select(DB::raw("COALESCE(SUM(sold_quantity),0)"));
 
-   //  }])
+     }])
    ->orderBy('updated_at','desc')
    ->get();
 
@@ -151,9 +151,6 @@ class StockController extends Controller
         $stock->status = 1;
         $stock->save();
 
-        Stock::where('product_id','=',$request->product)
-        ->where('current_quantity','>',0)
-        ->update(['selling_price'=>$request->selling_price]);
 
         return response()->json(['status'=>'success','message'=>'Producto añadido a existencias']);
 
