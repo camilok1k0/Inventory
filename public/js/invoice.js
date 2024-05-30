@@ -41825,18 +41825,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     findStock: function findStock(index) {
-      var _this4 = this;
-
-      if (this.invoice.product[index].product_id === "") {
-        this.invoice.product[index].stocks = [];
-      } else {
-        axios.get(base_url + "chalan-list/chalan/" + this.invoice.product[index].product_id.id).then(function (response) {
-          _this4.invoice.product[index].stocks = response.data;
-        });
-      }
-    },
+        var _this4 = this;
+      
+        
+      
+        // Continuar con la lógica para buscar las existencias
+        if (this.invoice.product[index].product_id === "") {
+          this.invoice.product[index].stocks = [];
+        } else {
+          axios.get(base_url + "chalan-list/chalan/" + this.invoice.product[index].product_id.id).then(function (response) {
+            _this4.invoice.product[index].stocks = response.data;
+          });
+        }
+      },
     findStockDetails: function findStockDetails(index) {
       var _this5 = this;
+     
 
       if (this.invoice.product[index].chalan_id === "") {
         this.invoice.product[index].quantity = 0;
@@ -42628,10 +42632,12 @@ var render = function() {
                                     _vm._v("Seleccionar Comprobante")
                                   ]),
                                   _vm._v(" "),
-                                  _vm._l(vl.stocks.sort((a, b) => new Date(a.chalan_no) - new Date(b.chalan_no)), function(ch, ch_index) {
+                                  _vm._l(vl.stocks.sort((a, b) => new Date(a.chalan_no) - new Date(b.chalan_no)), function(ch, ch_index, contadorClicks) {
                                     return _c(
                                       "option",
-                                      { domProps: { value: ch.id } },
+                                      { 
+                                        key: ch.id,
+                                        domProps: { value: ch.id, disabled: contadorClicks !== 0 && ch_index !==0 } },
                                       [
                                         _vm._v(
                                           "\n                        " +
@@ -42902,14 +42908,17 @@ var render = function() {
                           staticClass: "btn bg-teal",
                           attrs: { href: "" },
                           on: {
-                            click: function($event) {
+                            click: function($event, contadorClicks = 0) {
                               $event.preventDefault()
+                              contadorClicks++;
+                              console.log(contadorClicks);
                               return _vm.addmore.apply(null, arguments)
                             }
                           }
                         },
                         [_vm._v("+ Añadir más")]
-                      )
+  
+                    )
                     ])
                   ]
                 )
@@ -43479,6 +43488,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     return {
 
+      contadorClicks: 0, 
       invoice_id: '',
       customer_id: '',
       start_date: new Date('2019-02-03'),
@@ -43519,6 +43529,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log(error);
       });
     },
+
 
 
     // edit vendor 
@@ -43996,7 +44007,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }]
 
       },
-
+      contadorClicks : 0,
       invoice_state: false,
       errors: {}
     };
@@ -44014,6 +44025,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
   methods: {
+
+    addmore() {
+        this.contadorClicks++; // Incrementa el contador de clics
+      },
 
     // finding the data which have to be edit 
     editData: function editData(id) {
