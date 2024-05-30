@@ -42628,7 +42628,7 @@ var render = function() {
                                     _vm._v("Seleccionar Comprobante")
                                   ]),
                                   _vm._v(" "),
-                                  _vm._l(vl.stocks, function(ch, ch_index) {
+                                  _vm._l(vl.stocks.sort((a, b) => new Date(a.chalan_no) - new Date(b.chalan_no)), function(ch, ch_index) {
                                     return _c(
                                       "option",
                                       { domProps: { value: ch.id } },
@@ -44653,7 +44653,7 @@ var render = function() {
                                     _vm._v("Select Comprobante")
                                   ]),
                                   _vm._v(" "),
-                                  _vm._l(vl.stocks, function(ch) {
+                                  _vm._l(_.orderBy(vl.stocks, ['created_at'], ['asc']), function(ch) {
                                     return _c(
                                       "option",
                                       { domProps: { value: ch.id } },

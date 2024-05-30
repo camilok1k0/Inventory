@@ -186,12 +186,11 @@ class InvoiceController extends Controller
               }
             $invoice->save();
 
+             //invoice details 
 
-            // invoice details 
-
-            // n $request->product;
-            // return $stock = Stock::find($request->product[1]['chalan_id']);
-            // exit();
+             // $request->product;
+             //return $stock = Stock::find($request->product[1]['chalan_id']);
+             //exit();
 
             foreach ($request->product as  $value) {
                 

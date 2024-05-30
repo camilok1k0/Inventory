@@ -217,7 +217,7 @@
                       <select class="form-control" v-model="invoice.product[index].chalan_id"
                         @change="findStockDetails(index)">
                         <option value>Seleccionar Comprobante</option>
-                        <option v-for="(ch, ch_index) in vl.stocks" :value="ch.id">
+                        <option v-for="(ch, ch_index) in vl.stocks.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at))" :value="chalan_no.id">
                           {{
                             ch.chalan_no }}. qty({{ ch.current_quantity }})
                         </option>
